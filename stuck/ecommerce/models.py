@@ -21,6 +21,8 @@ class AuthUser(models.Model):
     is_active = models.IntegerField()
     date_joined = models.DateTimeField()
 
+    def __str__(self):
+        return self.username
     class Meta:
         managed = False
         db_table = 'auth_user'
@@ -57,4 +59,4 @@ class Influence(models.Model):
         managed = False
         db_table = 'Influence'
 
-
+            

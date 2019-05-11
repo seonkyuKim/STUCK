@@ -1,10 +1,10 @@
 from django.urls import path
-from ecommerce import views
+from influence import views
 
 
 app_name = 'influence'
 
 
 urlpatterns = [
-    
+    path('', views.index, name = 'index')
 ]

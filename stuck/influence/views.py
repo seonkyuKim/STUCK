@@ -1,22 +1,24 @@
 from django.shortcuts import render, redirect
 from influence.models import UserDatabase, AuthUser, Influence
 from django.contrib.auth.decorators import login_required
-
 import requests
 
 # Create your views here.
+
 
 @login_required
 def index(request):
     context = {}
     if request.method == 'GET':
         is_first = False
-        
+
         try:
+
             username = str(request.user)
             print(type(username))
             user = UserDatabase.objects.get(username=username)
             print('a')
+
             followers = user.followers
             influence_points = user.influence_points
             print('b')
@@ -30,7 +32,6 @@ def index(request):
             print(categories)
             for category in categories:
                 category_list.append(category.name)
-                
 
             context['username'] = username
             context['first_name'] = first_name
@@ -44,16 +45,46 @@ def index(request):
             is_first = True
 
         context['is_first'] = is_first
-    
+
     return render(request, 'index_influence.html', context)
+
+#
+# @login_required
+# def send_email(request):
+#     if request.method == 'POST':
+#         subject = request.POST['subject']
+#         content = request.POST['content']
+#         from_email = request.user.email
+#         to_email =
+#
+#
+#         parameters = {"to_email":to_email,"subject":subject, "from_email":from_email, "content": content }
+#
+#         response = requests.post("https://rapidprod-sendgrid-v1.p.rapidapi.com/mail/send",
+#                              headers={
+#                                  "X-RapidAPI-Host": "rapidprod-sendgrid-v1.p.rapidapi.com",
+#                                  "X-RapidAPI-Key": "93f9fbcb4cmsh077ae042f813545p198404jsn63ed6dfe8961",
+#                                  "Content-Type": "application/json"
+#                              },
+#                              data=(
+#                                  "{\"personalizations\":[{\"to\":[{\"email\":\"" + parameters["to"] + "\"}],\"subject\":\"" + parameters["subject"] + "\"}],\"from\":{\"email\":\"" + parameters[from] + "\"},\"content\":[{\"type\":\"text/plain\",\"value\":\"" + parameters[Content] + "\"}]}")
+#                              )
+#         if response:
+#             print("Response has suceeded")
+#
+#
+#     else: print("request metod did not enter post")
+#
+#     #TO DO: SELECT THE RETURN VALUE FOR THE FUNCTION
+#     return
 
 @login_required
 def update_info(request):
-    
+
     if request.method == 'POST':
         username = request.user.username
         parameters = {"source": "twitter", "username": username}
-        response = requests.get("https://kred-exp-v2.p.rapidapi.com/kred/score/twitter/"+username,
+        response = requests.get("https://kred-exp-v2.p.rapidapi.com/kred/score/twitter/" + username,
                                 headers={
                                     "X-RapidAPI-Host": "kred-exp-v2.p.rapidapi.com",
                                     "X-RapidAPI-Key": "1c9e6a311fmsha6886b0dd447173p13096bjsnfd5b64c58107"
@@ -62,7 +93,7 @@ def update_info(request):
                                 )
 
         parameter1 = {"screen_name": username}
-        response1 = requests.get("https://peerreach.p.rapidapi.com/user/lookup.json?screen_name="+username,
+        response1 = requests.get("https://peerreach.p.rapidapi.com/user/lookup.json?screen_name=" + username,
                                  headers={
                                      "X-RapidAPI-Host": "peerreach.p.rapidapi.com",
                                      "X-RapidAPI-Key": "93f9fbcb4cmsh077ae042f813545p198404jsn63ed6dfe8961"
@@ -81,25 +112,25 @@ def update_info(request):
             influence_points = data["influence_points"]
 
             auth_user = AuthUser.objects.get(username=username)
+
             user = UserDatabase.objects.get(username=auth_user)
             user.followers = followers
             user.influence_points = influence_points
 
+
             user.save()
-            
+
             categories = data1['peergroups']
             for category in categories:
                 in_obj = Influence.objects.filter(username=auth_user, name=category['topic'])[0]
                 in_obj.points=category['score']
                 
+
                 in_obj.save()
-            
+
         else:
             print("Response failed")
     else:
         print("request metod did not enter post")
 
-
     return redirect('influence:index')
-
-    

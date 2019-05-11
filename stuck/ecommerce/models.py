@@ -25,10 +25,17 @@ class AuthUser(models.Model):
         managed = False
         db_table = 'auth_user'
 
+    def __str__(self):
+        return self.username
+
+    
+
+
+
 
 class UserDatabase(models.Model):
     id = models.BigAutoField(primary_key=True)
-    username = models.ForeignKey(AuthUser, models.DO_NOTHING, db_column='username')
+    username = models.ForeignKey(AuthUser, models.DO_NOTHING, to_field='username', db_column='username', unique=True)
     followers = models.IntegerField()
     influence_points = models.IntegerField()
 
@@ -36,12 +43,15 @@ class UserDatabase(models.Model):
         managed = False
         db_table = 'user_database'
 
+    def __str__(self):
+        return self.username
+
 
 class Influence(models.Model):
     id = models.BigAutoField(primary_key=True)
-    username = models.ForeignKey('UserDatabase', models.DO_NOTHING, db_column='username')
+    username = models.ForeignKey('AuthUser', models.DO_NOTHING, to_field='username', db_column='username')
     name = models.CharField(max_length=50)
-    point = models.IntegerField()
+    points = models.IntegerField()
 
     class Meta:
         managed = False

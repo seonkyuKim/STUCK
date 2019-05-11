@@ -34,6 +34,7 @@ ALLOWED_HOSTS = ['ec2-13-125-255-255.ap-northeast-2.compute.amazonaws.com', '127
 INSTALLED_APPS = [
     'ecommerce',
     'influence',
+    'user',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -163,4 +164,5 @@ ACCOUNT_AUTHENTICATED_LOGIN_REDIRECTS = False
 LOGIN_REDIRECT_URL = "/influence/"
 ACCOUNT_AUTHENTICATED_LOGOUT_REDIRECTS = False
 ACCOUNT_LOGOUT_REDIRECT_URL = "/"
-
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_SIGNUP_FORM_CLASS = 'user.forms.RegistrationForm'

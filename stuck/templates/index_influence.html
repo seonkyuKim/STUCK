@@ -49,15 +49,18 @@
             <div class="col-sm-12 col-md-6 pb-3">
                 <h2>{{user.username}}</h2>
                 <p>{{user.profileid}}</p>
+                <form action="{% url 'influence:request' %}" method="post">
+                        {% csrf_token %}
+                        <!-- <input type="submit" name="" value="Update Info"> -->
+                        <button type="submit" class="btn btn-outline-success" name="">Update Info</button>
+                        
+                    </form>
             </div>
         </div>
+        
+        
+        
         <hr class="color-gradient">
-
-
-        <form action="{% url 'influence:request' %}" method="post">
-        {% csrf_token %}
-        <input type="submit" name="" value="Update Info">
-        </form>
 
         {% if is_first %}
 
@@ -65,13 +68,13 @@
 
         {% else %}
         <nav>
-            <div class="nav nav-tabs justify-content-center" id="nav-tab" role="tablist">
-                <a class="nav-item nav-link active text-gradient text-semibold mx-auto px-5" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
+            <div class="nav nav-tabs justify-content-start" id="nav-tab" role="tablist">
+                <a class="nav-item nav-link active text-gradient text-semibold mx-auto px-5 pb-2" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
                     aria-controls="nav-home" aria-selected="true">Profile</a>
                 <a class="nav-item nav-link text-gradient text-semibold mx-auto px-5" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
                     aria-controls="nav-profile" aria-selected="false">Categories</a>
                 <a class="nav-item nav-link text-gradient text-semibold mx-auto px-5" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab"
-                    aria-controls="nav-contact" aria-selected="false">Contact</a>
+                    aria-controls="nav-contact" aria-selected="false">Contact</a>  
             </div>
         </nav>
         <div class="tab-content" id="nav-tabContent">
@@ -101,7 +104,7 @@
                         </table>
             </div>
             <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-                
+                    qsqsqs
             </div>
         </div>
         {% endif %}

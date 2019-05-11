@@ -9,61 +9,64 @@ def index(request):
 
     category_set = get_influences()
     total_category_list = list(category_set)
-
-    category_list = ['Seoul', 'Junction']
+    
     user_list = []
+    categories = Influence.objects.select_related('username').all()    
 
-    for category in category_list:
+    for category in categories:
+        user_dict = {}
+        user = UserDatabase.objects.get(username=category.username)
+        user_dict['username'] = user.username
+        user_dict['followers'] = user.followers
+        user_dict['influence_points'] = user.influence_points
+        user_dict['category'] = category.name
+        user_dict['points'] = category.points
 
-        categories = Influence.objects.select_related('username').filter(name=category)    
+        user_list.append(user_dict)
 
-        for category in categories:
-            user_dict = {}
-            user = UserDatabase.objects.get(username=category.username)
-            user_dict['username'] = user.username
-            user_dict['followers'] = user.followers
-            user_dict['influence_points'] = user.influence_points
-            user_dict['category'] = category.name
-            user_dict['points'] = category.points
 
-            user_list.append(user_dict)
 
-    
-
-    context = { 'users': user_list }
-
-    # for user in users:
-    #     print(user)
-
-    # users = UserDatabase.objects.filter(flag=True).order_by('followers')
-    # user_list = []
-
-    # for user in users:
-    #     user_dict = {}
-    #     username = user.username
-    #     followers = user.followers
-    #     influence_points = user.influence_points
-
-    #     user_dict["username"] = username
-    #     user_dict["followers"] = followers
-    #     user_dict["influence_points"] = influence_points
-
-    #     influences = Influence.objects.filter(username=username).order_by('points')
-    #     # influences = Influence.objects.all()
-    #     influence_dict = {}
-        
-    #     for influence in influences:
-    #         influence_dict[influence.name] = influence.points
-            
-    #     user_dict["influence"] = influence_dict
-
-    #     user_list.append(user_dict)
-
-    # context = { "users": user_list}
-    
-
+    context = { 'users': user_list, 'total_category_list': total_category_list }
 
     return render(request, 'ecommerce.html', context)
+
+
+
+def see_influencer(request):
+    context = {}
+    if request.method == 'POST':        
+        
+        try:
+            username = request.POST['data']
+
+            user = UserDatabase.objects.get(username=username)
+            followers = user.followers
+            influence_points = user.influence_points
+
+            auth_user = AuthUser.objects.get(username=username)
+            first_name = auth_user.first_name
+            last_name = auth_user.last_name
+
+            categories = Influence.objects.filter(username=auth_user)
+            category_list = []
+            print(categories)
+            for category in categories:
+                category_list.append(category.name)
+                
+
+            context['username'] = username
+            context['first_name'] = first_name
+            context['last_name'] = last_name
+            context['followers'] = followers
+            context['influence_points'] = influence_points
+            context['categories'] = category_list
+
+        except:
+            print('except')
+            is_first = True
+
+    
+    return render(request, 'index_influence.html', context)
 
 
 def get_influences():

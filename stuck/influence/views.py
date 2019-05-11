@@ -13,11 +13,19 @@ def index(request):
         is_first = False
 
         try:
+<<<<<<< HEAD
 
             user = UserDatabase.objects.get(username=request.user.username)
             username = user.username
+=======
+            username = str(request.user)
+            print(type(username))
+            user = UserDatabase.objects.get(username=username)
+            print('a')
+>>>>>>> 70dfe91d36b2828df0d717d4678895011c72ec67
             followers = user.followers
             influence_points = user.influence_points
+            print('b')
 
             auth_user = AuthUser.objects.get(username=username)
             first_name = auth_user.first_name

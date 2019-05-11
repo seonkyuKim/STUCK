@@ -69,8 +69,8 @@
 
     <div class="container justify-content-center px-5 pt-5 mt-5">
         <div id="buttongrid">
-            {% for row in users %}
-            <a id=row.category class="btn btn-primary px-5 mx-1 my-1" onClick="reply_click(this.id)" href="#" role="button"> row.category </a>
+            {% for row in total_category_list %}
+            <a id={{row}} aria-pressed="true" class="active btn btn-primary px-5 mx-1 my-1" onClick="reply_click(this.id)" href="#" role="button"> {{row}} </a>
             {% endfor %}
     </div>
 
@@ -78,7 +78,17 @@
     <script>
         function reply_click(clicked_id)
         {
-            alert(clicked_id);
+            // $.post("{% url 'ecommerce:index' %}", {"category": clicked_id})
+            if ($("#" + clicked_id).hasClass("active")){
+                $("#" + clicked_id).removeClass("active");
+                $("#" + clicked_id).removeAttr("aria-pressed");
+                $("tr td:contains('" + clicked_id + "')").parent().hide();
+            }
+            else{
+                $("#" + clicked_id).addClass("active");
+                $("#" + clicked_id).attr("aria-pressed", "true");
+                $("tr td:contains('" + clicked_id + "')").parent().show();
+            }
         }
     </script>
 
@@ -101,7 +111,7 @@
                     <!-- Template for each row -->
                     <tr>
                         <th scope="row">{{ forloop.counter }}</th>
-                        <td>{{ row.username }}</td>
+                        <td onClick="postself(this)">{{ row.username }}</td>
                         <td>{{ row.followers }}</td>
                         <td>{{ row.influence_points }}</td>
                         <td>{{ row.category }}</td>
@@ -112,6 +122,11 @@
                     
                     </tbody>
                     </table>
+                    <script>
+                        function postself(data){
+                            $.post("/influence", data);
+                        }
+                    </script>
         </div>
     </div>
 

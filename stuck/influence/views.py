@@ -13,16 +13,10 @@ def index(request):
         is_first = False
 
         try:
-<<<<<<< HEAD
-
-            user = UserDatabase.objects.get(username=request.user.username)
-            username = user.username
-=======
             username = str(request.user)
             print(type(username))
             user = UserDatabase.objects.get(username=username)
             print('a')
->>>>>>> 70dfe91d36b2828df0d717d4678895011c72ec67
             followers = user.followers
             influence_points = user.influence_points
             print('b')
@@ -52,35 +46,35 @@ def index(request):
 
     return render(request, 'index_influence.html', context)
 
-#
-# @login_required
-# def send_email(request):
-#     if request.method == 'POST':
-#         subject = request.POST['subject']
-#         content = request.POST['content']
-#         from_email = request.user.email
-#         to_email =
-#
-#
-#         parameters = {"to_email":to_email,"subject":subject, "from_email":from_email, "content": content }
-#
-#         response = requests.post("https://rapidprod-sendgrid-v1.p.rapidapi.com/mail/send",
-#                              headers={
-#                                  "X-RapidAPI-Host": "rapidprod-sendgrid-v1.p.rapidapi.com",
-#                                  "X-RapidAPI-Key": "93f9fbcb4cmsh077ae042f813545p198404jsn63ed6dfe8961",
-#                                  "Content-Type": "application/json"
-#                              },
-#                              data=(
-#                                  "{\"personalizations\":[{\"to\":[{\"email\":\"" + parameters["to"] + "\"}],\"subject\":\"" + parameters["subject"] + "\"}],\"from\":{\"email\":\"" + parameters[from] + "\"},\"content\":[{\"type\":\"text/plain\",\"value\":\"" + parameters[Content] + "\"}]}")
-#                              )
-#         if response:
-#             print("Response has suceeded")
-#
-#
-#     else: print("request metod did not enter post")
-#
-#     #TO DO: SELECT THE RETURN VALUE FOR THE FUNCTION
-#     return
+
+@login_required
+def send_email(request):
+    if request.method == 'POST':
+        subject = request.POST['subject']
+        content = request.POST['content']
+        from_email = request.user.email
+        to_email =
+
+
+        parameters = {"to_email":to_email,"subject":subject, "from_email":from_email, "content": content }
+
+        response = requests.post("https://rapidprod-sendgrid-v1.p.rapidapi.com/mail/send",
+                             headers={
+                                 "X-RapidAPI-Host": "rapidprod-sendgrid-v1.p.rapidapi.com",
+                                 "X-RapidAPI-Key": "93f9fbcb4cmsh077ae042f813545p198404jsn63ed6dfe8961",
+                                 "Content-Type": "application/json"
+                             },
+                             data=(
+                                 "{\"personalizations\":[{\"to\":[{\"email\":\"" + parameters["to"] + "\"}],\"subject\":\"" + parameters["subject"] + "\"}],\"from\":{\"email\":\"" + parameters[from] + "\"},\"content\":[{\"type\":\"text/plain\",\"value\":\"" + parameters[Content] + "\"}]}")
+                             )
+        if response:
+            print("Response has suceeded")
+
+
+    else: print("request metod did not enter post")
+
+    #TO DO: SELECT THE RETURN VALUE FOR THE FUNCTION
+    return
 
 @login_required
 def update_info(request):

@@ -40,59 +40,19 @@ def index(request):
 
 
 @csrf_exempt
-def see_influencer(request, user_name):
+def see_influencer(request):
     context = {}
-<<<<<<< HEAD
-    if request.method == 'POST':
-        
-        username = request.POST["username"]
-        print(request.POST["username"])
-        
-=======
     # if request.method == 'POST':
 
 
->>>>>>> 497191360949d31793012267c5e35771f8ec6a9f
         # username = request.POST['data']
         # username = str('realdonaldtrump')
 
         # user = AuthUser.objects.get(username=username)
-<<<<<<< HEAD
-        
-        try:
-            user = UserDatabase.objects.get(username=username)
-
-            
-            followers = user.followers
-            influence_points = user.influence_points
-
-            auth_user = AuthUser.objects.get(username=username)
-            first_name = auth_user.first_name
-            last_name = auth_user.last_name
-
-            categories = Influence.objects.filter(username=auth_user)
-            category_list = []
-            print(categories)
-            for category in categories:
-                category_list.append(category.name)
-                
-
-            context['username'] = username
-            context['first_name'] = first_name
-            context['last_name'] = last_name
-            context['followers'] = followers
-            context['influence_points'] = influence_points
-            context['categories'] = category_list
-
-        except Exception as e:
-            print(e)
-            is_first = True
-
-    
-=======
+    print(got_user_name)
 
     try:
-        user = UserDatabase.objects.get(username=username)
+        user = UserDatabase.objects.get(username=got_user_name)
 
 
         followers = user.followers
@@ -121,7 +81,6 @@ def see_influencer(request, user_name):
         is_first = True
 
 
->>>>>>> 497191360949d31793012267c5e35771f8ec6a9f
     return render(request, 'index_influence.html', context)
 
 

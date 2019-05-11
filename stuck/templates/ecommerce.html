@@ -69,8 +69,8 @@
 
     <div class="container justify-content-center px-5 pt-5 mt-5">
         <div id="buttongrid">
-            {% for row in users %}
-            <a id=row.category class="btn btn-primary px-5 mx-1 my-1" onClick="reply_click(this.id)" href="#" role="button"> row.category </a>
+            {% for row in total_category_list %}
+            <a id={{ row }} class="btn btn-primary px-5 mx-1 my-1" onClick="reply_click(this.id)" href="#" role="button"> {{ row }} </a>
             {% endfor %}
     </div>
 
@@ -129,9 +129,9 @@
                                 username: data.title,},
                                 dataType : "json",
                                 complete: function( msg ){
-                                    console.log(msg);
-                                    // redirect("{% url 'ecommerce:see' %}", 'post');
-                                    $(document.body).html(msg.responseText);
+                                    //console.log(msg);
+                                    redirect("{% url 'ecommerce:see' %}", 'post');
+                                    // $(document.body).html(msg.responseText);
                                 }
                             });
                         }

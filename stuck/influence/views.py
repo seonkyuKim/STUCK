@@ -54,7 +54,7 @@ def update_info(request):
         response = requests.get("https://kred-exp-v2.p.rapidapi.com/kred/score/twitter/"+username,
                                 headers={
                                     "X-RapidAPI-Host": "kred-exp-v2.p.rapidapi.com",
-                                    "X-RapidAPI-Key": "93f9fbcb4cmsh077ae042f813545p198404jsn63ed6dfe8961"
+                                    "X-RapidAPI-Key": "1c9e6a311fmsha6886b0dd447173p13096bjsnfd5b64c58107"
                                 },
                                 params=parameters
                                 )

@@ -5,12 +5,11 @@
     <title></title>
   </head>
   <body>
-    <!-- <h1>This is the profile page for {{user.username}} after logging in</h1> -->
-
+    <h1>This is the profile page for {{user.username}} after logging in</h1>
 
     {% if user not None %}
     <h1>Follwers:  {{user.followers}}</h1>
-    <h1>Influence Points:  {{}}</h1>
+    <h1>Influence Points:  {{user.influence_points}}</h1>
 
 
     {% else %}
@@ -21,7 +20,5 @@
       {% csrf_token %}
       <input type="submit" name="" value="Update Info">
     </form>
-
-    <h1>samp</h1>
   </body>
 </html>

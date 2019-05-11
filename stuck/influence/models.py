@@ -32,9 +32,6 @@ class AuthUser(models.Model):
 
 
 
-
-
-
 class UserDatabase(models.Model):
     id = models.BigAutoField(primary_key=True)
     username = models.ForeignKey(AuthUser, models.DO_NOTHING, to_field='username', db_column='username', unique=True)
@@ -48,3 +45,18 @@ class UserDatabase(models.Model):
 
     def __str__(self):
         return self.username
+
+
+class Influence(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    username = models.ForeignKey('AuthUser', models.DO_NOTHING, to_field='username', db_column='username')
+    name = models.CharField(max_length=50)
+    points = models.IntegerField()
+
+    class Meta:
+        managed = False
+        db_table = 'Influence'
+
+    def get_name(self):
+        return self.name
+

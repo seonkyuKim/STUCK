@@ -40,6 +40,7 @@ class UserDatabase(models.Model):
     username = models.ForeignKey(AuthUser, models.DO_NOTHING, to_field='username', db_column='username', unique=True)
     followers = models.IntegerField()
     influence_points = models.IntegerField()
+    flag = models.BooleanField()
 
     class Meta:
         managed = False

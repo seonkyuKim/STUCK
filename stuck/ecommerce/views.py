@@ -7,7 +7,7 @@ from ecommerce.models import UserDatabase, Influence
 
 def index(request):
 
-    users = UserDatabase.objects.all().order_by('followers')
+    users = UserDatabase.objects.filter(flag=True).order_by('followers')
     user_list = []
 
     for user in users:

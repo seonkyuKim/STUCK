@@ -4,3 +4,8 @@ from django.shortcuts import render
 
 def index(request):
     return render(request, 'index_influencer.html')
+
+
+
+def register_info(request):
+    pass

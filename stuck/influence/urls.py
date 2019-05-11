@@ -7,5 +7,5 @@ app_name = 'influence'
 
 urlpatterns = [
     path('', views.index, name = 'index'),
-    path('request/', views.update_info, name ='request')
+    path('request/', views.update_info, name ='request'),
 ]

@@ -17,7 +17,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    
+
     <link rel="stylesheet" href="../static/css/ecommerce.css">
 
     <!-- Optional JavaScript -->
@@ -35,12 +35,21 @@
                 crossorigin="anonymous"></script>
 
             <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
-    
-    
+
+
 
 </head>
 
 <body>
+    <!-- <script>
+        console.log("HIHIHI");
+
+        $(document).ready(function () {
+        $('#dtBasicExample').DataTable();
+        $('.dataTables_length').addClass('bs-select');
+        });
+    </script> -->
+
     <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top mb-5">
         <a class="navbar-brand text-bold text-gradient pl-3" href="/junctionx/webapp/">Fluence</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
@@ -60,8 +69,8 @@
 
     <div class="container justify-content-center px-5 pt-5 mt-5">
         <div id="buttongrid">
-            {% for row in total_category_list %}
-            <a id={{row}} aria-pressed="true" class="active btn btn-primary px-5 mx-1 my-1" onClick="reply_click(this.id)" href="#" role="button"> {{row}} </a>
+            {% for row in users %}
+            <a id=row.category class="btn btn-primary px-5 mx-1 my-1" onClick="reply_click(this.id)" href="#" role="button"> row.category </a>
             {% endfor %}
     </div>
 
@@ -69,28 +78,18 @@
     <script>
         function reply_click(clicked_id)
         {
-            // $.post("{% url 'ecommerce:index' %}", {"category": clicked_id})
-            if ($("#" + clicked_id).hasClass("active")){
-                $("#" + clicked_id).removeClass("active");
-                $("#" + clicked_id).removeAttr("aria-pressed");
-                $("tr td:contains('" + clicked_id + "')").parent().hide();
-            }
-            else{
-                $("#" + clicked_id).addClass("active");
-                $("#" + clicked_id).attr("aria-pressed", "true");
-                $("tr td:contains('" + clicked_id + "')").parent().show();
-            }
+            alert(clicked_id);
         }
     </script>
 
-    {% csrf_token %}   
+    {% csrf_token %}
     <div class="container pt-5 mt-5">
         <div class="row">
                 <table id="dtBasicExample" class="table table-bordered table-striped table-sm sortable">
                         <thead class="color-gradient text-white">
                         <tr>
                             <th class="th-sm" scope="col"> # </th>
-                            <th class="th-sm" scope="col">username</th>
+                            <a href="#"><th class="th-sm" scope="col">username</th></a>
                             <th class="th-sm" scope="col">followers</th>
                             <th class="th-sm" scope="col">influence points</th>
                             <th class="th-sm" scope="col">categories</th>
@@ -98,31 +97,32 @@
                         </tr>
                         </thead>
                     <tbody>
-                    
+
                     {% for row in users %}
                     <!-- Template for each row -->
                     <tr>
-                        <th scope="row">{{ forloop.counter }}</th>
+                        <td>{{ forloop.counter }}</td>
                         <td title={{ row.username }} onClick="postself(this)">{{ row.username }}</td>
                         <td>{{ row.followers }}</td>
                         <td>{{ row.influence_points }}</td>
                         <td>{{ row.category }}</td>
                         <td>{{ row.points }}</td>
-                        <form method ="post" action="{% url 'ecommerce:see' %}">
-                            {% csrf_token %}
+                        <td><a href="{% url 'ecommerce:see' %}">view</a></td>
+
+                        <!-- <form method ="post" action="{% url 'ecommerce:see' %}">
                         <td><input type="submit" name = "" value = "Look into"></td>
-                        </form>
+                        </form> -->
                     </tr>
                     <!-- Template for each row -->
                     {% endfor %}
-                    
+
                     </tbody>
                     </table>
-                    
+
                     <script>
                         function postself(data){
                             $.ajax({
-                                url : "{% url 'ecommerce:see' %}",
+                                url : "{% url 'ecommerce:get_user' %}",
                                 type: "POST",
                                 headers: {'X-CSRFToken': document.getElementsByName('csrfmiddlewaretoken')[0].value},
                                 data: { csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
@@ -157,7 +157,7 @@
                         //     input.name = "category";
                         //     input.value = data.title;
                         //     form.appendChild(input);
-                        // }   
+                        // }
                         // form.submit();
                         // console.log(input);
                         // redirect("{% url 'ecommerce:see' %}", 'post');
@@ -165,7 +165,7 @@
         </div>
     </div>
 
-    
+
 </body>
 
 </html>

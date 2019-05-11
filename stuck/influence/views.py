@@ -6,6 +6,7 @@ import requests
 # Create your views here.
 
 
+
 @login_required
 def index(request):
     context = {}
@@ -17,7 +18,7 @@ def index(request):
             username = str(request.user)
             print(type(username))
             user = UserDatabase.objects.get(username=username)
-            
+            print('a')
 
             followers = user.followers
             influence_points = user.influence_points
@@ -48,14 +49,14 @@ def index(request):
 
     return render(request, 'index_influence.html', context)
 
-#
+
 # @login_required
 # def send_email(request):
 #     if request.method == 'POST':
 #         subject = request.POST['subject']
 #         content = request.POST['content']
 #         from_email = request.user.email
-#         to_email =
+#         # to_email =
 #
 #
 #         parameters = {"to_email":to_email,"subject":subject, "from_email":from_email, "content": content }
@@ -124,7 +125,7 @@ def update_info(request):
             for category in categories:
                 in_obj = Influence.objects.filter(username=auth_user, name=category['topic'])[0]
                 in_obj.points=category['score']
-                
+
 
                 in_obj.save()
 

@@ -13,10 +13,18 @@ def index(request):
         is_first = False
 
         try:
+<<<<<<< HEAD
+=======
+
+>>>>>>> 11c3c40a89ab8d8a9caf0bf3b88e86c5cbed8fe1
             username = str(request.user)
             print(type(username))
             user = UserDatabase.objects.get(username=username)
             print('a')
+<<<<<<< HEAD
+=======
+
+>>>>>>> 11c3c40a89ab8d8a9caf0bf3b88e86c5cbed8fe1
             followers = user.followers
             influence_points = user.influence_points
             print('b')
@@ -111,16 +119,19 @@ def update_info(request):
 
             auth_user = AuthUser.objects.get(username=username)
 
-            request.user.followers  = followers
-            request.user.influence_points = influence_points
+            user = UserDatabase.objects.get(username=auth_user)
+            user.followers = followers
+            user.influence_points = influence_points
+
 
             user.save()
 
             categories = data1['peergroups']
             for category in categories:
-                Influence.objects.filter(username=usernmae, category=category)
-                in_obj = Influence(
-                    username=auth_user, name=category['topic'], points=category['score'])
+                in_obj = Influence.objects.filter(username=auth_user, name=category['topic'])[0]
+                in_obj.points=category['score']
+                
+
                 in_obj.save()
 
         else:

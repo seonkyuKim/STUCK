@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from ecommerce.models import UserDatabase, Influence
+from ecommerce.models import UserDatabase, Influence, AuthUser
 
 
 # Create your views here.
@@ -34,36 +34,40 @@ def index(request):
 
 def see_influencer(request):
     context = {}
-    if request.method == 'POST':        
-        
-        try:
-            username = request.POST['data']
+    # if request.method == 'POST':
+    
 
-            user = UserDatabase.objects.get(username=username)
-            followers = user.followers
-            influence_points = user.influence_points
+    username = str('realdonaldtrump')
+    
+    # user = AuthUser.objects.get(username=username)
+    
+    try:
+        user = UserDatabase.objects.get(username=username)
+        print(user)
+        followers = user.followers
+        influence_points = user.influence_points
 
-            auth_user = AuthUser.objects.get(username=username)
-            first_name = auth_user.first_name
-            last_name = auth_user.last_name
+        auth_user = AuthUser.objects.get(username=username)
+        first_name = auth_user.first_name
+        last_name = auth_user.last_name
 
-            categories = Influence.objects.filter(username=auth_user)
-            category_list = []
-            print(categories)
-            for category in categories:
-                category_list.append(category.name)
-                
+        categories = Influence.objects.filter(username=auth_user)
+        category_list = []
+        print(categories)
+        for category in categories:
+            category_list.append(category.name)
+            
 
-            context['username'] = username
-            context['first_name'] = first_name
-            context['last_name'] = last_name
-            context['followers'] = followers
-            context['influence_points'] = influence_points
-            context['categories'] = category_list
+        context['username'] = username
+        context['first_name'] = first_name
+        context['last_name'] = last_name
+        context['followers'] = followers
+        context['influence_points'] = influence_points
+        context['categories'] = category_list
 
-        except:
-            print('except')
-            is_first = True
+    except:
+        print('except')
+        is_first = True
 
     
     return render(request, 'index_influence.html', context)

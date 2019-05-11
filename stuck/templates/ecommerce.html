@@ -82,6 +82,7 @@
         }
     </script>
 
+    {% csrf_token %}   
     <div class="container pt-5 mt-5">
         <div class="row">
                 <table id="dtBasicExample" class="table table-bordered table-striped table-sm sortable">
@@ -101,7 +102,11 @@
                     <!-- Template for each row -->
                     <tr>
                         <th scope="row">{{ forloop.counter }}</th>
+<<<<<<< HEAD
                         <td>{{ row.username }}</td>
+=======
+                        <td title={{row.username}} onClick="postself(this)">{{ row.username }}</td>
+>>>>>>> 11c3c40a89ab8d8a9caf0bf3b88e86c5cbed8fe1
                         <td>{{ row.followers }}</td>
                         <td>{{ row.influence_points }}</td>
                         <td>{{ row.category }}</td>
@@ -112,6 +117,21 @@
 
                     </tbody>
                     </table>
+<<<<<<< HEAD
+=======
+                    
+                    <script>
+                        function postself(data){
+                            $.ajax({
+                                url : "{% url 'ecommerce:see' %}",
+                                type: "POST",
+                                data: { csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
+                                username: data.title,},
+                                dataType : "json",
+                            });
+                        }
+                    </script>
+>>>>>>> 11c3c40a89ab8d8a9caf0bf3b88e86c5cbed8fe1
         </div>
     </div>
 

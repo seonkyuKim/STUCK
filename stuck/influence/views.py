@@ -81,12 +81,17 @@ def update_info(request):
             influence_points = data["influence_points"]
 
             auth_user = AuthUser.objects.get(username=username)
-            user = UserDatabase(username=auth_user, followers=followers, influence_points=influence_points, flag=1)
+            user = UserDatabase.objects.get(username=auth_user)
+            user.followers = followers
+            user.influence_points = influence_points
+
             user.save()
             
             categories = data1['peergroups']
             for category in categories:
-                in_obj = Influence(username=auth_user, name=category['topic'], points=category['score'])
+                in_obj = Influence.objects.filter(username=auth_user, name=category['topic'])[0]
+                in_obj.points=category['score']
+                
                 in_obj.save()
             
         else:

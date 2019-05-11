@@ -34,7 +34,8 @@ def index(request):
 
 def see_influencer(request):
     context = {}
-    if request.method == 'POST':        
+    if request.method == 'POST':
+        print(request.POST['data'])
         
         try:
             username = request.POST['data']

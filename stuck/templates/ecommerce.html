@@ -111,7 +111,7 @@
                     <!-- Template for each row -->
                     <tr>
                         <th scope="row">{{ forloop.counter }}</th>
-                        <td onClick="postself(this)">{{ row.username }}</td>
+                        <td title={{row.username}} onClick="postself(this)">{{ row.username }}</td>
                         <td>{{ row.followers }}</td>
                         <td>{{ row.influence_points }}</td>
                         <td>{{ row.category }}</td>
@@ -124,7 +124,8 @@
                     </table>
                     <script>
                         function postself(data){
-                            $.post("/influence", data);
+                            console.log(data.title);
+                            $.post("{% url 'ecommerce:see' %}", data.title);
                         }
                     </script>
         </div>

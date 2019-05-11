@@ -41,15 +41,6 @@
 </head>
 
 <body>
-    <script>
-        console.log("HIHIHI");
-        
-        $(document).ready(function () {
-        $('#dtBasicExample').DataTable();
-        $('.dataTables_length').addClass('bs-select');
-        });
-    </script>
-
     <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top mb-5">
         <a class="navbar-brand text-bold text-gradient pl-3" href="/junctionx/webapp/">Fluence</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
@@ -137,15 +128,15 @@
                                 data: { csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
                                 username: data.title,},
                                 dataType : "json",
-                                success: function( msg ){
-                                    console.log("test");
+                                complete: function( msg ){
                                     console.log(msg);
-                                    redirect("{% url 'ecommerce:see' %}", 'post');
+                                    // redirect("{% url 'ecommerce:see' %}", 'post');
+                                    $(document.body).html(msg.responseText);
                                 }
                             });
                         }
-                        console.log("something");
-                        redirect("{% url 'ecommerce:see' %}", 'post');
+                        // console.log("something");
+                        // redirect("{% url 'ecommerce:see' %}", 'post');
                         // function postself(data){
                         // var redirect = function(url, method) {
                         // var form = document.createElement('form');

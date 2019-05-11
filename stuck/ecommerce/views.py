@@ -36,8 +36,8 @@ def see_influencer(request):
     context = {}
     if request.method == 'POST':
         
-        username = request.POST
-        print(request.POST)
+        username = request.POST["username"]
+        print(request.POST["username"])
         
         # username = request.POST['data']
         # username = str('realdonaldtrump')
@@ -69,8 +69,8 @@ def see_influencer(request):
             context['influence_points'] = influence_points
             context['categories'] = category_list
 
-        except:
-            print('except')
+        except Exception as e:
+            print(e)
             is_first = True
 
     

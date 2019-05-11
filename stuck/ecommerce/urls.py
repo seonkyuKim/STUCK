@@ -1,4 +1,4 @@
-from django.conf.urls import url
+from django.urls import path
 from ecommerce import views
 
 
@@ -6,5 +6,5 @@ app_name = 'ecommerce'
 
 
 urlpatterns = [
-    url('', views.index, name='index'),
+    path('', views.index, name='index'),
 ]

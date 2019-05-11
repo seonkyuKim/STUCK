@@ -48,3 +48,5 @@ class Influence(models.Model):
     class Meta:
         managed = False
         db_table = 'Influence'
+
+            

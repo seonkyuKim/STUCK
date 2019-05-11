@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <h1>This is the profile page for {{user.username}} after logging in</h1>
+
+    <form enctype="multipart/form-data" method="post">
+      {% csrf_token %}
+      <input type="submit" name="" value="Update Info">
+    </form>
+  </body>
+</html>

@@ -101,17 +101,17 @@
                     {% for row in users %}
                     <!-- Template for each row -->
                     <tr>
-
+                        <td>{{ forloop.counter }}</td>
                         <td title={{ row.username }} onClick="postself(this)">{{ row.username }}</td>
-
                         <td>{{ row.followers }}</td>
                         <td>{{ row.influence_points }}</td>
                         <td>{{ row.category }}</td>
                         <td>{{ row.points }}</td>
-                        <form method ="post" action="{% url 'ecommerce:see' %}">
-                            {% csrf_token %}
+                        <td><a href="{% url 'ecommerce:see' %}">view</a></td>
+
+                        <!-- <form method ="post" action="{% url 'ecommerce:see' %}">
                         <td><input type="submit" name = "" value = "Look into"></td>
-                        </form>
+                        </form> -->
                     </tr>
                     <!-- Template for each row -->
                     {% endfor %}
@@ -122,7 +122,7 @@
                     <script>
                         function postself(data){
                             $.ajax({
-                                url : "{% url 'ecommerce:see' %}",
+                                url : "{% url 'ecommerce:get_user' %}",
                                 type: "POST",
                                 headers: {'X-CSRFToken': document.getElementsByName('csrfmiddlewaretoken')[0].value},
                                 data: { csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,

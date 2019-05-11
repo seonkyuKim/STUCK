@@ -112,11 +112,15 @@
                     <!-- Template for each row -->
                     <tr>
                         <th scope="row">{{ forloop.counter }}</th>
-                        <td title={{row.username}} onClick="postself(this)">{{ row.username }}</td>
+                        <td title={{ row.username }} onClick="postself(this)">{{ row.username }}</td>
                         <td>{{ row.followers }}</td>
                         <td>{{ row.influence_points }}</td>
                         <td>{{ row.category }}</td>
                         <td>{{ row.points }}</td>
+                        <form method ="post" action="{% url 'ecommerce:see' %}">
+                            {% csrf_token %}
+                        <td><input type="submit" name = "" value = "Look into"></td>
+                        </form>
                     </tr>
                     <!-- Template for each row -->
                     {% endfor %}
@@ -129,11 +133,43 @@
                             $.ajax({
                                 url : "{% url 'ecommerce:see' %}",
                                 type: "POST",
+                                headers: {'X-CSRFToken': document.getElementsByName('csrfmiddlewaretoken')[0].value},
                                 data: { csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
                                 username: data.title,},
                                 dataType : "json",
+                                success: function( msg ){
+                                    console.log("test");
+                                    console.log(msg);
+                                    redirect("{% url 'ecommerce:see' %}", 'post');
+                                }
                             });
                         }
+                        console.log("something");
+                        redirect("{% url 'ecommerce:see' %}", 'post');
+                        // function postself(data){
+                        // var redirect = function(url, method) {
+                        // var form = document.createElement('form');
+                        // form.method = method;
+                        // form.action = url;
+                        // form.submit();
+                        // };
+
+                        // redirect("{% url 'ecommerce:see' %}", 'post');
+                        // function postself(data) {
+                        //     var form = document.createElement('form');
+                        //     document.body.appendChild(form);
+                        //     form.append("{% csrf_token %} ")
+                        //     form.method = 'post';
+                        //     form.action = "{% url 'ecommerce:see' %}";
+                        //     var input = document.createElement('input');
+                        //     input.type = 'hidden';
+                        //     input.name = "category";
+                        //     input.value = data.title;
+                        //     form.appendChild(input);
+                        // }   
+                        // form.submit();
+                        // console.log(input);
+                        // redirect("{% url 'ecommerce:see' %}", 'post');
                     </script>
         </div>
     </div>

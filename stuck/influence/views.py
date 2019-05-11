@@ -17,7 +17,7 @@ def index(request):
             username = str(request.user)
             print(type(username))
             user = UserDatabase.objects.get(username=username)
-            print('a')
+            
 
             followers = user.followers
             influence_points = user.influence_points

@@ -7,6 +7,8 @@
 # Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
 
+
+
 class AuthUser(models.Model):
     password = models.CharField(max_length=128)
     last_login = models.DateTimeField(blank=True, null=True)
@@ -30,6 +32,9 @@ class AuthUser(models.Model):
 
 
 
+
+
+
 class UserDatabase(models.Model):
     id = models.BigAutoField(primary_key=True)
     username = models.ForeignKey(AuthUser, models.DO_NOTHING, to_field='username', db_column='username', unique=True)
@@ -42,7 +47,7 @@ class UserDatabase(models.Model):
         db_table = 'user_database'
 
     def __str__(self):
-        return username
+        return self.username
 
 
 class Influence(models.Model):
@@ -51,11 +56,7 @@ class Influence(models.Model):
     name = models.CharField(max_length=50)
     points = models.IntegerField()
 
+
     class Meta:
         managed = False
         db_table = 'Influence'
-
-    def get_name(self):
-        return self.name
-
-            

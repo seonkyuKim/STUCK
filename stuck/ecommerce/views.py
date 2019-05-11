@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from ecommerce.models import UserDatabase, Influence, AuthUser
-
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 
@@ -31,43 +31,47 @@ def index(request):
     return render(request, 'ecommerce.html', context)
 
 
-
+@csrf_exempt
 def see_influencer(request):
     context = {}
-    # if request.method == 'POST':
-    
+    if request.method == 'POST':
+        
+        username = request.POST
+        print(request.POST)
+        
+        # username = request.POST['data']
+        # username = str('realdonaldtrump')
+        
+        # user = AuthUser.objects.get(username=username)
+        
+        try:
+            user = UserDatabase.objects.get(username=username)
 
-    username = str('realdonaldtrump')
-    
-    # user = AuthUser.objects.get(username=username)
-    
-    try:
-        user = UserDatabase.objects.get(username=username)
-        print(user)
-        followers = user.followers
-        influence_points = user.influence_points
-
-        auth_user = AuthUser.objects.get(username=username)
-        first_name = auth_user.first_name
-        last_name = auth_user.last_name
-
-        categories = Influence.objects.filter(username=auth_user)
-        category_list = []
-        print(categories)
-        for category in categories:
-            category_list.append(category.name)
             
+            followers = user.followers
+            influence_points = user.influence_points
 
-        context['username'] = username
-        context['first_name'] = first_name
-        context['last_name'] = last_name
-        context['followers'] = followers
-        context['influence_points'] = influence_points
-        context['categories'] = category_list
+            auth_user = AuthUser.objects.get(username=username)
+            first_name = auth_user.first_name
+            last_name = auth_user.last_name
 
-    except:
-        print('except')
-        is_first = True
+            categories = Influence.objects.filter(username=auth_user)
+            category_list = []
+            print(categories)
+            for category in categories:
+                category_list.append(category.name)
+                
+
+            context['username'] = username
+            context['first_name'] = first_name
+            context['last_name'] = last_name
+            context['followers'] = followers
+            context['influence_points'] = influence_points
+            context['categories'] = category_list
+
+        except:
+            print('except')
+            is_first = True
 
     
     return render(request, 'index_influence.html', context)
@@ -81,3 +85,11 @@ def get_influences():
         influences.add(row['name'])
 
     return influences
+
+
+# def get_user(request):
+#     if request.method == 'POST':
+        
+#         username = request.POST['username']
+#         print(username)
+        

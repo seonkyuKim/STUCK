@@ -21,17 +21,13 @@ class AuthUser(models.Model):
     is_active = models.IntegerField()
     date_joined = models.DateTimeField()
 
-    def __str__(self):
-        return self.username
+    
     class Meta:
         managed = False
         db_table = 'auth_user'
 
     def __str__(self):
         return self.username
-
-
-
 
 
 
@@ -56,7 +52,10 @@ class Influence(models.Model):
     name = models.CharField(max_length=50)
     points = models.IntegerField()
 
-
     class Meta:
         managed = False
         db_table = 'Influence'
+
+    def get_name(self):
+        return self.name
+

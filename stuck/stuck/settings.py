@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ['ec2-13-125-255-255.ap-northeast-2.compute.amazonaws.com', '127
 
 INSTALLED_APPS = [
     'ecommerce',
+    'influence',
 
     'django.contrib.admin',
     'django.contrib.auth',

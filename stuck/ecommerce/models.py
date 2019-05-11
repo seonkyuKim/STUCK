@@ -8,24 +8,43 @@
 from django.db import models
 
 
-class Hashtags(models.Model):
-    id = models.BigAutoField(primary_key=True)
-    username = models.ForeignKey('User', models.DO_NOTHING, db_column='username')
-    tag = models.CharField(max_length=50)
 
-    class Meta:
-        managed = False
-        db_table = 'Hashtags'
-
-
-class User(models.Model):
-    username = models.CharField(primary_key=True, max_length=30)
+class AuthUser(models.Model):
+    password = models.CharField(max_length=128)
+    last_login = models.DateTimeField(blank=True, null=True)
+    is_superuser = models.IntegerField()
+    username = models.CharField(unique=True, max_length=150)
     first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=30)
-    bio = models.CharField(max_length=150)
+    last_name = models.CharField(max_length=150)
+    email = models.CharField(max_length=254)
+    is_staff = models.IntegerField()
+    is_active = models.IntegerField()
+    date_joined = models.DateTimeField()
 
     class Meta:
         managed = False
-        db_table = 'User'
+        db_table = 'auth_user'
+
+
+class UserDatabase(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    username = models.ForeignKey(AuthUser, models.DO_NOTHING, db_column='username')
+    followers = models.IntegerField()
+    influence_points = models.IntegerField()
+
+    class Meta:
+        managed = False
+        db_table = 'user_database'
+
+
+class Influence(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    username = models.ForeignKey('UserDatabase', models.DO_NOTHING, db_column='username')
+    name = models.CharField(max_length=50)
+    point = models.IntegerField()
+
+    class Meta:
+        managed = False
+        db_table = 'Influence'
 
 

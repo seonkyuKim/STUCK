@@ -1,0 +1,24 @@
+<table>
+    <thead>
+    <tr>
+        <th></th>
+        <th>username</th>
+        <th>followers</th>
+        <th>influence points</th>
+    </tr>
+    </thead>
+<tbody>
+
+{% for row in users %}
+
+<tr>
+    <td>{{ forloop.counter }}</td>
+    <td>{{ row.username }}</td>
+    <td>{{ row.followers }}</td>
+    <td>{{ row.influence_point }}</td>
+</tr>
+
+{% endfor %}
+
+</tbody>
+</table>

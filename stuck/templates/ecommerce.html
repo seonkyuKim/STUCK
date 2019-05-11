@@ -92,6 +92,7 @@
         }
     </script>
 
+    {% csrf_token %}   
     <div class="container pt-5 mt-5">
         <div class="row">
                 <table id="dtBasicExample" class="table table-bordered table-striped table-sm sortable">
@@ -122,10 +123,16 @@
                     
                     </tbody>
                     </table>
+                    
                     <script>
                         function postself(data){
-                            console.log(data.title);
-                            $.post("{% url 'ecommerce:see' %}", data.title);
+                            $.ajax({
+                                url : "{% url 'ecommerce:see' %}",
+                                type: "POST",
+                                data: { csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
+                                username: data.title,},
+                                dataType : "json",
+                            });
                         }
                     </script>
         </div>

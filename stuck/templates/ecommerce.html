@@ -51,7 +51,7 @@
     </script> -->
 
     <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top mb-5">
-        <a class="navbar-brand text-bold text-gradient pl-3" href="http://127.0.0.1:8000">Fluence</a>
+        <a class="navbar-brand text-bold text-gradient pl-3" href="http://127.0.0.1:8000/index">Fluence</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
             aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -112,7 +112,7 @@
                     <!-- Template for each row -->
                     <tr>
                         <td>{{ forloop.counter }}</td>
-                        <td title={{ row.username }} onClick="postself(this)">{{ row.username }}</td>
+                        <td title={{ row.username }} onClick="postself(this)"> <a href="{% url 'ecommerce:see' %}">{{ row.username }}</a></td>
                         <td>{{ row.followers }}</td>
                         <td>{{ row.influence_points }}</td>
                         <td>{{ row.category }}</td>
@@ -129,48 +129,29 @@
                     </tbody>
                     </table>
 
-                    <script>
-                        function postself(data){
-                            $.ajax({
-                                url : "{% url 'ecommerce:get_user' %}",
-                                type: "POST",
-                                headers: {'X-CSRFToken': document.getElementsByName('csrfmiddlewaretoken')[0].value},
-                                data: { csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
-                                username: data.title,},
-                                dataType : "json",
-                                complete: function( msg ){
-                                    //console.log(msg);
-                                    redirect("{% url 'ecommerce:see' %}", 'post');
-                                    // $(document.body).html(msg.responseText);
-                                }
-                            });
-                        }
-                        // console.log("something");
-                        // redirect("{% url 'ecommerce:see' %}", 'post');
-                        // function postself(data){
-                        // var redirect = function(url, method) {
-                        // var form = document.createElement('form');
-                        // form.method = method;
-                        // form.action = url;
-                        // form.submit();
-                        // };
-
-                        // redirect("{% url 'ecommerce:see' %}", 'post');
-                        // function postself(data) {
-                        //     var form = document.createElement('form');
-                        //     document.body.appendChild(form);
-                        //     form.append("{% csrf_token %} ")
-                        //     form.method = 'post';
-                        //     form.action = "{% url 'ecommerce:see' %}";
-                        //     var input = document.createElement('input');
-                        //     input.type = 'hidden';
-                        //     input.name = "category";
-                        //     input.value = data.title;
-                        //     form.appendChild(input);
-                        // }
-                        // form.submit();
-                        // console.log(input);
-                        // redirect("{% url 'ecommerce:see' %}", 'post');
+                    
+      <script>
+            function postself(data) {
+              $.ajax({
+                url: "{% url 'ecommerce:get_user' %}",
+                type: "POST",
+                headers: {
+                  'X-CSRFToken': document.getElementsByName('csrfmiddlewaretoken')[0].value
+                },
+                data: {
+                  csrfmiddlewaretoken: document.getElementsByName('csrfmiddlewaretoken')[0].value,
+                  username: data.title,
+                },
+                dataType: "json",
+                complete: function(msg) {
+                  console.log("test");
+                  console.log(msg);
+                  redirect("{% url 'ecommerce:see' %}", 'post');
+                }
+              });
+            }
+            console.log("something");
+            redirect("{% url 'ecommerce:see' %}", 'post');
                     </script>
         </div>
     </div>

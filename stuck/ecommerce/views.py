@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from ecommerce.models import UserDatabase, Influence, AuthUser
 from django.views.decorators.csrf import csrf_exempt
+import requests
 
 got_user = "whatever"
 
@@ -119,25 +120,30 @@ def get_influences():
 
 
 
-@login_required
+
 def email(request):
     if request.method == 'POST':
         subject = request.POST['subject']
         content = request.POST['content']
         from_email = request.user.email
-        # to_email =
+        global got_user
+        user_name = got_user
+        print(user_name)
+        print("AaAaAAASFSFNAKSFBASKFB")
+        profile_user = AuthUser.objects.filter(username=user_name)[0]
+        to_email = profile_user.email
 
 
         parameters = {"to_email":to_email,"subject":subject, "from_email":from_email, "content": content }
 
         response = requests.post("https://rapidprod-sendgrid-v1.p.rapidapi.com/mail/send",
                              headers={
-                                 "X-RapidAPI-Host": "rapidprod-sendgrid-v1.p.rapidapi.com",
+                                 "X-RapidAPI-Host": "rapidprod-sendgrid-v1.p.rapidapi.com",                           
                                  "X-RapidAPI-Key": "93f9fbcb4cmsh077ae042f813545p198404jsn63ed6dfe8961",
                                  "Content-Type": "application/json"
                              },
                              data=(
-                                 "{\"personalizations\":[{\"to\":[{\"email\":\"" + parameters["to"] + "\"}],\"subject\":\"" + parameters["subject"] + "\"}],\"from\":{\"email\":\"" + parameters[from] + "\"},\"content\":[{\"type\":\"text/plain\",\"value\":\"" + parameters[Content] + "\"}]}")
+                                 "{\"personalizations\":[{\"to\":[{\"email\":\"" + parameters["to_email"] + "\"}],\"subject\":\"" + parameters["subject"] + "\"}],\"from\":{\"email\":\"" + parameters["from_email"] + "\"},\"content\":[{\"type\":\"text/plain\",\"value\":\"" + parameters["content"] + "\"}]}")
                              )
         if response:
             print("Response has suceeded")
@@ -146,4 +152,4 @@ def email(request):
     else: print("request metod did not enter post")
 
     #TO DO: SELECT THE RETURN VALUE FOR THE FUNCTION
-    return
+    return redirect('ecommerce:see')

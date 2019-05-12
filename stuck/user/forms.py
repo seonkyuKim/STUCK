@@ -15,5 +15,5 @@ class RegistrationForm(forms.ModelForm):
     def signup(self, request, user):
           first_name =  self.cleaned_data['first_name']
           last_name = self.cleaned_data['last_name']
-          person = AuthUser(username=request.user.username, first_name=first_name, last_name=last_name, is_superuser=False)
+          person = AuthUser(username=request.user.username, first_name=first_name, last_name=last_name, is_superuser=False, is_staff=False)
           person.save()

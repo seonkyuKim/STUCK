@@ -51,7 +51,7 @@
     </script> -->
 
     <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top mb-5">
-        <a class="navbar-brand text-bold text-gradient pl-3" href="/junctionx/webapp/">Fluence</a>
+        <a class="navbar-brand text-bold text-gradient pl-3" href="http://127.0.0.1:8000">Fluence</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault"
             aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -70,17 +70,27 @@
     <div class="container justify-content-center px-5 pt-5 mt-5">
         <div id="buttongrid">
             {% for row in total_category_list %}
-            <a id={{ row }} class="btn btn-primary px-5 mx-1 my-1" onClick="reply_click(this.id)" href="#" role="button"> {{ row }} </a>
+            <a id={{ row }} aria-pressed=true class="active btn btn-primary px-5 mx-1 my-1" onClick="reply_click(this.id)" href="#" role="button"> {{ row }} </a>
             {% endfor %}
     </div>
 
     </div>
     <script>
-        function reply_click(clicked_id)
-        {
-            alert(clicked_id);
-        }
-    </script>
+            function reply_click(clicked_id)
+            {
+                // $.post("{% url 'ecommerce:index' %}", {"category": clicked_id})
+                if ($("#" + clicked_id).hasClass("active")){
+                    $("#" + clicked_id).removeClass("active");
+                    $("#" + clicked_id).removeAttr("aria-pressed");
+                    $("tr td:contains('" + clicked_id + "')").parent().hide();
+                }
+                else{
+                    $("#" + clicked_id).addClass("active");
+                    $("#" + clicked_id).attr("aria-pressed", "true");
+                    $("tr td:contains('" + clicked_id + "')").parent().show();
+                }
+            }
+        </script>
 
     {% csrf_token %}
     <div class="container pt-5 mt-5">

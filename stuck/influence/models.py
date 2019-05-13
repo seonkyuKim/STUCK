@@ -35,9 +35,9 @@ class AuthUser(models.Model):
 class UserDatabase(models.Model):
     id = models.BigAutoField(primary_key=True)
     username = models.ForeignKey(AuthUser, models.DO_NOTHING, to_field='username', db_column='username', unique=True)
-    followers = models.IntegerField()
-    influence_points = models.IntegerField()
-    flag = models.BooleanField()
+    followers = models.IntegerField(null=True)
+    influence_points = models.IntegerField(null=True)
+    flag = models.BooleanField(default=1)
 
     class Meta:
         managed = False

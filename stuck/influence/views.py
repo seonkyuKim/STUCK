@@ -12,13 +12,13 @@ def index(request):
     context = {}
     if request.method == 'GET':
         is_first = False
+        uu = ''
 
         try:
-
             username = str(request.user)
-            print(type(username))
+            uu = username
             user = UserDatabase.objects.get(username=username)
-            print('a')
+            
 
             followers = user.followers
             influence_points = user.influence_points
@@ -44,6 +44,8 @@ def index(request):
         except:
             print('except')
             is_first = True
+            us = AuthUser.objects.get(username=uu)
+            UserDatabase(username=us, followers=1, influence_points=1, flag=1).save()
 
         context['is_first'] = is_first
 
@@ -96,11 +98,15 @@ def update_info(request):
 
             categories = data1['peergroups']
             for category in categories:
-                in_obj = Influence.objects.filter(username=auth_user, name=category['topic'])[0]
-                in_obj.points=category['score']
+                try:
+                    in_obj = Influence.objects.filter(username=auth_user, name=category['topic'])[0]
+                    in_obj.points=category['score']
+                    in_obj.save()
 
+                except:
+                    Influence(username=auth_user, name=category['topic'], points=category['score']).save()
 
-                in_obj.save()
+                
 
         else:
             print("Response failed")

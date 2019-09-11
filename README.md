@@ -29,10 +29,13 @@ Part-time social influencers who usually focus on targeted niche market with mod
 
 They are limited in terms of marketing budget and category-specific in terms of their product-lines. As a result, it demands more expenses and resources to find a social influencer of their spending rate and promote their campaign on twitter.
 
-
 ## How we built it
 
 Kred API,PeerReach API, SendGrid API, Python Django, Twitter Third Party Authorization
+
+## Team STUCK
+
+Team STUCK is from Junction X Seoul 2019. Team composition is [Seonkyu](https://github.com/seonkyuKim), Janar, John, Tyler, and 창현 from all over the world!
 
 ## Challenges we ran into
 

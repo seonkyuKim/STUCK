@@ -29,7 +29,7 @@ They are limited in terms of marketing budget and category-specific in terms of 
 
 ## How we built it
 
-Kred API,PeerReach API, SendGrid API, Python Django, Twitter Third Party Authorization
+Kred API,PeerReach API, SendGrid API, Python Django, Twitter Third Party Authorization, AWS RDS
 
 ## Team STUCK
 

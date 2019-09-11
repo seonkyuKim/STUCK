@@ -7,16 +7,14 @@
 
 Micro influencers can sign up using their twitter identification and our platform will analyze their audience, category and stats. Look for or receive the offers from the matching businesses. Businesses can pay a subscription fees and have access to matching influencers based on their subscription plan and contact them through platform.
 
+For [live demo](https://janarosmonaliev.github.io/junctionx/webapp/).
+
 
 ![](https://github.com/seonkyuKim/STUCK/blob/master/images/rendering-page.png)
 
 ![](https://github.com/seonkyuKim/STUCK/blob/master/images/homepage.png)
 
 ![](https://github.com/seonkyuKim/blob/master/STUCK/images/sign-in.png)
-
-![](https://github.com/seonkyuKim/blob/master/STUCK/images/contact.png)
-
-![](https://github.com/seonkyuKim/blob/master/STUCK/images/profile.png)
 
 
 ## Inspiration
